@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Finding Similar Colors</title>
+<script src="./Colors.js"></script>
+<script src="./PaintingLib.js"></script>
+<script src="./DATSQUARE.js"></script>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script>
+var colors;
+var times = new Array();
+$(document).ready(function() {
+				colors = new Colors();
+				canvas = document.getElementById("c");
+				context = canvas.getContext("2d");
+								
+				$("a").click(function() {
+					if ($(this).hasClass("search")) {
+						alert(colors.search($('#red').val(), $('#green').val(), $('#blue').val()));
+					}
+					else if($(this).hasClass("quicksort")) {
+						for(var i = 0; i < 200; i++) {
+							times.push(colors.doQuick());
+						}
+						alert("Average Time: " + colors.calcAverage(times) + " Slowest Time: " + colors.calcHighest(times) +
+								" Fastest Time: " + colors.calcLowest(times));
+						times = [];
+	
+					}
+					else if($(this).hasClass("mergesort")) {
+						for(var i = 0; i < 200; i++) {
+							times.push(colors.doMerge());
+						}
+						alert("Average Time: " + colors.calcAverage(times) + " Slowest Time: " + colors.calcHighest(times) +
+								" Fastest Time: " + colors.calcLowest(times));
+						times = [];
+					}
+					else if($(this).hasClass("insertion")) {
+						for(var i = 0; i < 200; i++) {
+							times.push(colors.doInsertion());
+						}
+						alert("Average Time: " + colors.calcAverage(times) + " Slowest Time: " + colors.calcHighest(times) +
+								" Fastest Time: " + colors.calcLowest(times));
+						times = [];
+					}
+					else if($(this).hasClass("shuffle")){
+						colors.doShuffle();
+					}
+					else {
+						alert("You will regret clicking that :)");
+						var instance = this;
+						setInterval(function() { colors.doShuffle();}, 1);
+					}
+				});
+            });
+        </script>
+    </head>
+    <body>    
+        <canvas width="1200" height="500" id="c"></canvas>
+						<p>
+							Red: <input type="text" id="red" size="1"><br>
+							Green: <input type="text" id="green" size="1"><br>
+							Blue: <input type="text" id="blue" size="1"><br>
+							<a href="#" class="search">Search</a>
+							<a href="#" class="mergesort">Merge Sort</a>
+							<a href="#" class="quicksort">QuickSort</a>
+							<a href="#" class="insertion">Insertion Sort</a>
+							<a href="#" class="shuffle">Shuffle</a>
+							<a href="#" class="seizure">Seizure</a>
+						</p>
+    </body>
+</html>
